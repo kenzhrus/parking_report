@@ -1,0 +1,24 @@
+dependencies:
+  pre:
+    - gem install bundler
+
+database:
+  override:
+    - cp config/database.yml.circle config/database.yml
+    - bundle exec rake db:migrate
+
+test:
+  pre:
+    - bundle exec brakeman -w3 -o brakeman.html
+    - bundle exec rubocop -o rubocop.log || true
+    - bundle exec rails_best_practices -x "db\/" -f html . || true
+
+
+  post:
+    - cp brakeman.html rubocop.log rails_best_practices_output.html $CIRCLE_ARTIFACTS || echo "ratchets detail copy failed":
+        parallel: true
+    - tar -zcvf $CIRCLE_ARTIFACTS/logs.tar.gz log || echo "Logs compress and share failed":
+        parallel: true
+    - cp -r coverage $CIRCLE_ARTIFACTS/coverage || echo "coverage copy failed":
+        parallel: true
+

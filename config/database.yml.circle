@@ -1,0 +1,17 @@
+base: &base
+  host: localhost
+  username: ubuntu
+  database: circle_test
+  adapter: postgresql
+  # rspec does not respect our initializer so we disable with config
+  prepared_statements: false
+
+test:
+  <<: *base
+
+development:
+  <<: *base
+
+production:
+  <<: *base
+
