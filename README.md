@@ -12,6 +12,7 @@ Things you may want to cover:
 * Configuration
 
 * Database creation
+  This project used PostgresSQL as a database server.
 
 * Database initialization
 
@@ -22,3 +23,4 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
